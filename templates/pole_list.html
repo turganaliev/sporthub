@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Pole{% endblock title %}
+
+{% block content %}
+  {% for pole in object_list %}
+    <div class="card">
+      <div class="card-header">
+        <span class="font-weight-bold"><a href="{% url 'pole_detail' pk=pole.pk%}">{{ pole.title }}</a></span> &middot;
+        <span class="text-muted">by {{ pole.author }} |
+        {{ pole.date }}</span>
+      </div>
+      <div class="card-body">
+        <p>{{ pole.body }}</p>
+        <a href="{% url 'pole_edit' pole.pk %}">Edit</a> |
+        <a href="{% url 'pole_delete' pole.pk %}">Delete</a>
+      </div>
+      <div class="card-footer">
+        {% for comment in pole.comments.all %}
+          <p>
+            <span class="font-weight-bold">{{ comment.author }} &middot;</span>
+            {{ comment }}
+          </p>
+        {% endfor %}
+      </div>
+    </div>
+    <br />
+  {% endfor %}
+{% endblock content %}

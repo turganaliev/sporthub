@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+  {{ form.image }}
+  {{ form.pole }}
+<button class="btn btn-info ml-2" type="submit">Add</button>
+</form>
+<div class="pole-entry">
+    <p>by {{ object.author }} | {{ object.date }}</p>
+    <p>{{ object.body }}</p>
+
+      {% for x in object.images.all %}
+          <img src="{{x.image.url}}" alt="" height="300">
+      {% endfor %}
+
+  </div>
+
+  {% if object.status %}
+
+  <p><a href="{% url 'pole_edit' object.pk %}">Edit</a> |
+    <a href="{% url 'pole_delete' object.pk %}">Delete</a></p>
+  {% else %}
+
+
+
+    <p>Back to <a href="{% url 'pole_list' %}">All Fields</a>.</p>
+  {% endif %}
+{% endblock content %}
